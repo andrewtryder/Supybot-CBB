@@ -593,9 +593,9 @@ INSERT INTO teams VALUES ("31337", "1748", "Bishop", "");  --  0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "896", "Black Hills State Yellow Jackets", "");  -- 0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "82", "Baptist Christian College Warriors", "");  -- 0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "1786", "Walla Walla Community College Warriors", "");  --  0-0 (0-0)
-INSERT INTO teams VALUES ("31337", "1817", "Johnson &amp; Wales (NC) Wildcats", "");  --  0-0 (0-0)
-INSERT INTO teams VALUES ("31337", "1656", "Johnson &amp; Wales (CO) Wildcats", "");  --  Independent (Non D-1)
-INSERT INTO teams VALUES ("31337", "1765", "Johnson &amp; Wales (FL) Wildcats", "");  --  Independent (Non D-1)
+INSERT INTO teams VALUES ("31337", "1817", "Johnson & Wales (NC) Wildcats", "");  --  0-0 (0-0)
+INSERT INTO teams VALUES ("31337", "1656", "Johnson & Wales (CO) Wildcats", "");  --  Independent (Non D-1)
+INSERT INTO teams VALUES ("31337", "1765", "Johnson & Wales (FL) Wildcats", "");  --  Independent (Non D-1)
 INSERT INTO teams VALUES ("31337", "1473", "Hillsdale Free Will Baptist Saints", "");  --  0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "137", "Carroll (MT) Fighting Saints", "");  -- 0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "906", "Palm Beach Atlantic Sailfish", "");  -- Independent (Non D-1)
@@ -647,8 +647,8 @@ INSERT INTO teams VALUES ("31337", "938", "Ohio Wesleyan Battling Bishops", "");
 INSERT INTO teams VALUES ("31337", "1741", "Lincoln University of Missouri Blue Tigers", "");  --  0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "1165", "St. Thomas (FL) Bobcats", "");  -- Florida Sun
 INSERT INTO teams VALUES ("31337", "1457", "College of the Ozarks Bobcats", "");  --  Midlands Collegiate Athletic Conference
-INSERT INTO teams VALUES ("31337", "1487", "Georgia College &amp; State Bobcats", "");  --  Peach Belt Athletic
-INSERT INTO teams VALUES ("31337", "635", "West Texas A&amp;M Buffaloes", "");  -- Lone Star Conference
+INSERT INTO teams VALUES ("31337", "1487", "Georgia College & State Bobcats", "");  --  Peach Belt Athletic
+INSERT INTO teams VALUES ("31337", "635", "West Texas A&M Buffaloes", "");  -- Lone Star Conference
 INSERT INTO teams VALUES ("31337", "1660", "Johnson C. Smith Golden Bulls", "");  --  Central Intercollegiate Athletics Association
 INSERT INTO teams VALUES ("31337", "1050", "Cal State-Chico Wildcats", "");  -- California Collegiate Athletic Association
 INSERT INTO teams VALUES ("31337", "1147", "California-San Diego Tritons", "");  -- California Collegiate Athletic Association
@@ -714,9 +714,9 @@ INSERT INTO teams VALUES ("31337", "1491", "Brooklyn College Bridges", "");  -- 
 INSERT INTO teams VALUES ("31337", "1669", "York (NY) Cardinals", "");  --  City University of New Yo
 INSERT INTO teams VALUES ("31337", "1145", "Medgar Evers Cougars", "");  -- City University of New Yo
 INSERT INTO teams VALUES ("31337", "1168", "Staten Island Dolphins", "");  -- City University of New Yo
-INSERT INTO teams VALUES ("31337", "1329", "North Central Cardinals", "");  --  College Conference of Illinois &amp; Wisconsin
-INSERT INTO teams VALUES ("31337", "1708", "Wheaton (IL) Thunder", "");  --  College Conference of Illinois &amp; Wisconsin
-INSERT INTO teams VALUES ("31337", "1192", "Augustana (IL) Vikings", "");  -- College Conference of Illinois &amp; Wisconsin
+INSERT INTO teams VALUES ("31337", "1329", "North Central Cardinals", "");  --  College Conference of Illinois & Wisconsin
+INSERT INTO teams VALUES ("31337", "1708", "Wheaton (IL) Thunder", "");  --  College Conference of Illinois & Wisconsin
+INSERT INTO teams VALUES ("31337", "1192", "Augustana (IL) Vikings", "");  -- College Conference of Illinois & Wisconsin
 INSERT INTO teams VALUES ("31337", "1807", "Gwynedd-Mercy Griffins", "");  --  Colonial States Athletic Conference
 INSERT INTO teams VALUES ("31337", "1816", "Neumann Knights", "");  --  Colonial States Athletic Conference
 INSERT INTO teams VALUES ("31337", "1714", "Alvernia College Crusaders", "");  --  Colonial States Athletic Conference
@@ -736,10 +736,10 @@ INSERT INTO teams VALUES ("31337", "1042", "Albright Lions", "");  -- Commonweal
 INSERT INTO teams VALUES ("31337", "651", "Widener Pioneers", "");  -- Commonwealth Conference
 INSERT INTO teams VALUES ("31337", "1627", "Susquehanna University Crusaders", "");  --  Commonwealth Conference
 INSERT INTO teams VALUES ("31337", "1647", "Elizabethtown Blue Jays", "");  --  Commonwealth Conference
-INSERT INTO teams VALUES ("31337", "188", "Elmhurst Bluejays", "");  -- Conference of Illinois &amp; Wisconsin
-INSERT INTO teams VALUES ("31337", "1421", "Illinois Wesleyan Titans", "");  --  Conference of Illinois &amp; Wisconsin
-INSERT INTO teams VALUES ("31337", "1284", "Carthage Red Men", "");  -- Conference of Illinois &amp; Wisconsin
-INSERT INTO teams VALUES ("31337", "750", "Millikin Big Blue", "");  -- Conference of Illinois &amp; Wisconsin
+INSERT INTO teams VALUES ("31337", "188", "Elmhurst Bluejays", "");  -- Conference of Illinois & Wisconsin
+INSERT INTO teams VALUES ("31337", "1421", "Illinois Wesleyan Titans", "");  --  Conference of Illinois & Wisconsin
+INSERT INTO teams VALUES ("31337", "1284", "Carthage Red Men", "");  -- Conference of Illinois & Wisconsin
+INSERT INTO teams VALUES ("31337", "750", "Millikin Big Blue", "");  -- Conference of Illinois & Wisconsin
 INSERT INTO teams VALUES ("31337", "1299", "Spring Arbor College Cougars", "");  -- Independent Athletic
 INSERT INTO teams VALUES ("31337", "1153", "St. Francis (IN) Cougars", "");  -- Mid-America Intercollegia
 INSERT INTO teams VALUES ("31337", "1831", "Cal State San Marcos Cougars", "");  --  Independent (Non D-1)
@@ -778,7 +778,7 @@ INSERT INTO teams VALUES ("31337", "1369", "Kentucky Christian Knights", "");  -
 INSERT INTO teams VALUES ("31337", "1377", "Maine-Fort Kent Bengals", "");  --  Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1388", "Aquinas College Saints", "");  --  Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1401", "Central Baptist Mustangs", "");  --  Dixie Intercollegiate Ath
-INSERT INTO teams VALUES ("31337", "1427", "Texas A&amp;M-International Dustdevils", "");  --  Dixie Intercollegiate Ath
+INSERT INTO teams VALUES ("31337", "1427", "Texas A&M-International Dustdevils", "");  --  Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1444", "Texas-Permian Basin Falcons", "");  --  Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1035", "Southwest Adventist Knights", "");  -- Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1049", "Jarvis Christian Bulldogs", "");  -- Dixie Intercollegiate Ath
@@ -796,7 +796,7 @@ INSERT INTO teams VALUES ("31337", "1171", "National Christian Eagles", "");  --
 INSERT INTO teams VALUES ("31337", "1221", "Mount Aloysius Mounties", "");  -- Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1233", "Oklahoma City Stars", "");  -- Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1269", "Siena Heights Saints", "");  -- Dixie Intercollegiate Ath
-INSERT INTO teams VALUES ("31337", "1626", "Oklahoma Arts &amp; Sciences Drovers", "");  --  Sooner Athletic Conference
+INSERT INTO teams VALUES ("31337", "1626", "Oklahoma Arts & Sciences Drovers", "");  --  Sooner Athletic Conference
 INSERT INTO teams VALUES ("31337", "1226", "Lebanon Valley Flying Dutchmen", "");  -- Commonwealth Conference
 INSERT INTO teams VALUES ("31337", "813", "Concordia University (CA) Eagles", "");  -- 0-0 (0-0)
 INSERT INTO teams VALUES ("31337", "898", "John Brown Golden Eagles", "");  -- 0-0 (0-0)
@@ -830,7 +830,7 @@ INSERT INTO teams VALUES ("31337", "1235", "Delaware Valley Aggies", "");  -- Fr
 INSERT INTO teams VALUES ("31337", "1339", "Montana State-Northern Lights", "");  --  Frontier
 INSERT INTO teams VALUES ("31337", "1478", "Western Montana Bulldogs", "");  --  Frontier
 INSERT INTO teams VALUES ("31337", "544", "San Francisco State Gators", "");  -- California Collegiate Athletic Association
-INSERT INTO teams VALUES ("31337", "909", "Washington &amp; Lee Generals", "");  -- Old Dominion Athletic
+INSERT INTO teams VALUES ("31337", "909", "Washington & Lee Generals", "");  -- Old Dominion Athletic
 INSERT INTO teams VALUES ("31337", "901", "West Virginia Tech Golden Bears", "");  -- West Virginia Intercolleg
 INSERT INTO teams VALUES ("31337", "1629", "St. Joseph's (NY-Long Island) Golden Eagles", "");  --  Skyline Conference
 INSERT INTO teams VALUES ("31337", "1603", "Biola Eagles", "");  --  Golden State Conference
@@ -1047,7 +1047,7 @@ INSERT INTO teams VALUES ("31337", "1542", "Plymouth State Panthers", "");  --  
 INSERT INTO teams VALUES ("31337", "1142", "Keene State Owls", "");  -- Little East
 INSERT INTO teams VALUES ("31337", "1287", "Sul Ross State Lobos", "");  -- American Southwest Conference
 INSERT INTO teams VALUES ("31337", "918", "Cameron Aggies", "");  -- Lone Star Conference
-INSERT INTO teams VALUES ("31337", "1371", "Texas A&amp;M-Commerce Lions", "");  --  Lone Star Conference
+INSERT INTO teams VALUES ("31337", "1371", "Texas A&M-Commerce Lions", "");  --  Lone Star Conference
 INSERT INTO teams VALUES ("31337", "1529", "East Central Tigers", "");  --  Lone Star Conference
 INSERT INTO teams VALUES ("31337", "1582", "Northeastern State RiverHawks", "");  --  Lone Star Conference
 INSERT INTO teams VALUES ("31337", "1056", "Tarleton State Texans", "");  -- Lone Star Conference
@@ -1120,12 +1120,12 @@ INSERT INTO teams VALUES ("31337", "1433", "Colby White Mules", "");  --  New En
 INSERT INTO teams VALUES ("31337", "1046", "Connecticut College Camels", "");  -- New England Small College Athletic Conference
 INSERT INTO teams VALUES ("31337", "1222", "Bowdoin Polar Bears", "");  -- New England Small College Athletic Conference
 INSERT INTO teams VALUES ("31337", "802", "Trinity (CT) Bantams", "");  -- New England Small College Athletic Conference
-INSERT INTO teams VALUES ("31337", "1406", "Springfield Pride", "");  --  New England Women's &amp; Men's Athletics Conference
-INSERT INTO teams VALUES ("31337", "1520", "MIT Engineers", "");  --  New England Women's &amp; Men's Athletics Conference
-INSERT INTO teams VALUES ("31337", "1561", "Clark Cougars", "");  --  New England Women's &amp; Men's Athletics Conference
-INSERT INTO teams VALUES ("31337", "1375", "Worcester Tech Engineers", "");  --  New England Women's &amp; Men's Athletics Conference
-INSERT INTO teams VALUES ("31337", "798", "Coast Guard Bears", "");  -- New England Women's &amp; Men's Athletics Conference
-INSERT INTO teams VALUES ("31337", "83", "Babson College Beavers", "");  -- New England Women's &amp; Men's Athletics Conference
+INSERT INTO teams VALUES ("31337", "1406", "Springfield Pride", "");  --  New England Women's & Men's Athletics Conference
+INSERT INTO teams VALUES ("31337", "1520", "MIT Engineers", "");  --  New England Women's & Men's Athletics Conference
+INSERT INTO teams VALUES ("31337", "1561", "Clark Cougars", "");  --  New England Women's & Men's Athletics Conference
+INSERT INTO teams VALUES ("31337", "1375", "Worcester Tech Engineers", "");  --  New England Women's & Men's Athletics Conference
+INSERT INTO teams VALUES ("31337", "798", "Coast Guard Bears", "");  -- New England Women's & Men's Athletics Conference
+INSERT INTO teams VALUES ("31337", "83", "Babson College Beavers", "");  -- New England Women's & Men's Athletics Conference
 INSERT INTO teams VALUES ("31337", "1569", "Stockton Ospreys", "");  --  New Jersey Athletic
 INSERT INTO teams VALUES ("31337", "1634", "Rowan Profs", "");  --  New Jersey Athletic
 INSERT INTO teams VALUES ("31337", "1640", "Ramapo Roadrunners", "");  --  New Jersey Athletic
@@ -1160,7 +1160,7 @@ INSERT INTO teams VALUES ("31337", "1546", "Mount Vernon Nazarene Cougars", "");
 INSERT INTO teams VALUES ("31337", "1673", "Cal State-San Bernardino Coyotes", "");  --  California Collegiate Athletic Association
 INSERT INTO teams VALUES ("31337", "1536", "Oregon Tech Hustlin' Owls", "");  --  Cascade Collegiate
 INSERT INTO teams VALUES ("31337", "1382", "Johns Hopkins Blue Jays", "");  --  Centennial
-INSERT INTO teams VALUES ("31337", "1465", "Franklin &amp; Marshall Diplomats", "");  --  Centennial
+INSERT INTO teams VALUES ("31337", "1465", "Franklin & Marshall Diplomats", "");  --  Centennial
 INSERT INTO teams VALUES ("31337", "1570", "St. Xavier (IL) Cougars", "");  --  Chicagoland Collegiate At
 INSERT INTO teams VALUES ("31337", "1732", "Calumet College Crimson Wave", "");  --  Chicagoland Collegiate At
 INSERT INTO teams VALUES ("31337", "1805", "Robert Morris (IL-Spr) Eagles", "");  --  Chicagoland Collegiate At
@@ -1333,16 +1333,16 @@ INSERT INTO teams VALUES ("31337", "1290", "Clarion Golden Eagles", "");  -- Pen
 INSERT INTO teams VALUES ("31337", "514", "Slippery Rock Rock", "");  -- Pennsylvania Athletic
 INSERT INTO teams VALUES ("31337", "717", "Shippensburg Red Raiders", "");  -- Pennsylvania Athletic
 INSERT INTO teams VALUES ("31337", "114", "Cal State-East Bay Pioneers", "");  -- Independent (Non D-1)
-INSERT INTO teams VALUES ("31337", "305", "Lewis &amp; Clark Pioneers", "");  -- Northwest Conference
+INSERT INTO teams VALUES ("31337", "305", "Lewis & Clark Pioneers", "");  -- Northwest Conference
 INSERT INTO teams VALUES ("31337", "1483", "Thiel College Tomcats", "");  --  Presidents Athletic Conference
 INSERT INTO teams VALUES ("31337", "1680", "Westminster (PA) Titans", "");  --  Presidents Athletic Conference
 INSERT INTO teams VALUES ("31337", "84", "Bethany (WV) Bison", "");  -- Presidents Athletic Conference
-INSERT INTO teams VALUES ("31337", "915", "Washington &amp; Jefferson Presidents", "");  -- Presidents Athletic Conference
+INSERT INTO teams VALUES ("31337", "915", "Washington & Jefferson Presidents", "");  -- Presidents Athletic Conference
 INSERT INTO teams VALUES ("31337", "1055", "St. Joseph's (IN) Pumas", "");  -- Great Lakes Valley Confer
 INSERT INTO teams VALUES ("31337", "1043", "Bluefield College Ramblin' Rams", "");  -- West Virginia Intercolleg
 INSERT INTO teams VALUES ("31337", "1087", "St. Mary's (TX) Rattlers", "");  -- Heartland Conference
 INSERT INTO teams VALUES ("31337", "574", "Thomas More Blue Rebels", "");  -- Independent (Non D-1)
-INSERT INTO teams VALUES ("31337", "1076", "Johnson &amp; Wales (RI) Wildcats", "");  -- Great Northeast Athletic Conference
+INSERT INTO teams VALUES ("31337", "1076", "Johnson & Wales (RI) Wildcats", "");  -- Great Northeast Athletic Conference
 INSERT INTO teams VALUES ("31337", "1228", "Nebraska-Kearney Antelopes", "");  -- Rocky Mountain Athletic Conference
 INSERT INTO teams VALUES ("31337", "484", "Regis Rangers", "");  -- Rocky Mountain Athletic Conference
 INSERT INTO teams VALUES ("31337", "1330", "Fort Lewis Skyhawks", "");  --  Rocky Mountain Athletic Conference
@@ -1360,7 +1360,7 @@ INSERT INTO teams VALUES ("31337", "1274", "Southeastern Oklahoma State Savage S
 INSERT INTO teams VALUES ("31337", "1082", "Monmouth (IL) Fighting Scots", "");  -- Midwest Conference
 INSERT INTO teams VALUES ("31337", "1059", "Ohio Valley Fighting Scots", "");  -- West Virginia Intercolleg
 INSERT INTO teams VALUES ("31337", "539", "St. Mary's (MD) Seahawks", "");  -- Capital Athletic
-INSERT INTO teams VALUES ("31337", "1182", "Davis &amp; Elkins Senators", "");  -- West Virginia Intercolleg
+INSERT INTO teams VALUES ("31337", "1182", "Davis & Elkins Senators", "");  -- West Virginia Intercolleg
 INSERT INTO teams VALUES ("31337", "1327", "Maritime Privateers", "");  --  Skyline Conference
 INSERT INTO teams VALUES ("31337", "1394", "Manhattanville Valiants", "");  --  Skyline Conference
 INSERT INTO teams VALUES ("31337", "1436", "Old Westbury Panthers", "");  --  Skyline Conference
@@ -1431,7 +1431,7 @@ INSERT INTO teams VALUES ("31337", "1081", "St. Leo Lions", "");  -- Sunshine St
 INSERT INTO teams VALUES ("31337", "1208", "Florida Tech Panthers", "");  -- Sunshine State
 INSERT INTO teams VALUES ("31337", "1243", "Lee University Flames", "");  -- Sunshine State
 INSERT INTO teams VALUES ("31337", "435", "Nova Southeastern Sharks", "");  -- Sunshine State
-INSERT INTO teams VALUES ("31337", "1143", "Missouri Science &amp; Technology Miners", "");  -- Great Lakes Valley Confer
+INSERT INTO teams VALUES ("31337", "1143", "Missouri Science & Technology Miners", "");  -- Great Lakes Valley Confer
 INSERT INTO teams VALUES ("31337", "1094", "McDaniel College Green Terror", "");  -- Dixie Intercollegiate Ath
 INSERT INTO teams VALUES ("31337", "1830", "Ave Maria Gyrenes", "");  --  The Sun Conference
 INSERT INTO teams VALUES ("31337", "190", "East Texas Baptist Tigers", "");  -- American Southwest Conference
@@ -1461,7 +1461,7 @@ INSERT INTO teams VALUES ("31337", "1567", "Christopher Newport Captains", ""); 
 INSERT INTO teams VALUES ("31337", "199", "Elizabeth City State Vikings", "");  -- Central Intercollegiate Athletics Association
 INSERT INTO teams VALUES ("31337", "629", "Wayne State (MI) Warriors", "");  -- Great Lakes Intercollegia
 INSERT INTO teams VALUES ("31337", "1103", "Hawaii Pacific Sea Warriors", "");  -- Pacific West Conference
-INSERT INTO teams VALUES ("31337", "1141", "Emory &amp; Henry Wasps", "");  -- Old Dominion Athletic
+INSERT INTO teams VALUES ("31337", "1141", "Emory & Henry Wasps", "");  -- Old Dominion Athletic
 INSERT INTO teams VALUES ("31337", "1350", "Shepherd Rams", "");  --  West Virginia Intercolleg
 INSERT INTO teams VALUES ("31337", "1589", "Alderson-Broaddus Battlers", "");  --  West Virginia Intercolleg
 INSERT INTO teams VALUES ("31337", "1497", "Wheeling Jesuit Cardinals", "");  --  West Virginia Intercolleg

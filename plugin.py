@@ -39,15 +39,13 @@ class CBB(callbacks.Plugin):
         self.__parent = super(CBB, self)
         self.__parent.__init__(irc)
         # our cfblive db.
-        self._cbbdb = os.path.abspath(os.path.dirname(__file__)) + '/db/cbb.db'
+        self._db = os.path.abspath(os.path.dirname(__file__)) + '/db/cbb.db'
         # initial states for channels.
         self.channels = {} # dict for channels with values as teams/ids
         self._loadpickle() # load saved data.
         # initial states for games.
         self.games = None
         self.nextcheck = None
-        # dupedict.
-        self.dupedict = {}
         # fetchhost system.
         self.fetchhost = None
         self.fetchhostcheck = None
@@ -65,20 +63,20 @@ class CBB(callbacks.Plugin):
                 self.log.error("cron: ERROR :: {0}".format(e))
                 self.nextcheck = self._utcnow()+72000 # add some major delay so the plugin does not spam.
         # and add the cronjob.
-        #try: # add our cronjob.
-        #    schedule.addPeriodicEvent(checkcfbcron, 30, now=True, name='checkcbb')
-        #except AssertionError:
-        #    try:
-        #        schedule.removeEvent('checkcfb')
-        #    except KeyError:
-        #        pass
-        #    schedule.addPeriodicEvent(checkcfbcron, 30, now=True, name='checkcbb')
+        try: # add our cronjob.
+            schedule.addPeriodicEvent(checkcfbcron, 30, now=True, name='checkcbb')
+        except AssertionError:
+            try:
+                schedule.removeEvent('checkcfb')
+            except KeyError:
+                pass
+            schedule.addPeriodicEvent(checkcfbcron, 30, now=True, name='checkcbb')
 
     def die(self):
-        #try: # remove cronjob.
-        #    schedule.removeEvent('checkcfb')
-        #except KeyError:
-        #    pass
+        try: # remove cronjob.
+            schedule.removeEvent('checkcbb')
+        except KeyError:
+            pass
         self.__parent.die()
 
     ######################
@@ -185,7 +183,7 @@ class CBB(callbacks.Plugin):
     def _tidtoname(self, tid, d=False):
         """Return team name for teamid from database. Use d=True to return as dict."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT team, tid FROM teams WHERE id=?", (tid,))
             row = cursor.fetchone()
@@ -214,7 +212,7 @@ class CBB(callbacks.Plugin):
     def _tidstoconfids(self, tid1, tid2):
         """Fetch the conference ID for a team."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             query = "SELECT DISTINCT conf FROM teams WHERE id IN (?, ?)"
             cursor.execute(query, (tid1, tid2,))
@@ -228,7 +226,7 @@ class CBB(callbacks.Plugin):
     def _confs(self):
         """Return a dict containing all conferences and their ids: k=id, v=confs."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             query = "SELECT id, conference FROM confs"
             cursor.execute(query)
@@ -238,7 +236,7 @@ class CBB(callbacks.Plugin):
     def _validconf(self, confname):
         """Validate a conf and return its ID."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             query = "SELECT id FROM confs WHERE conference=?"
             cursor.execute(query, (confname,))
@@ -252,7 +250,7 @@ class CBB(callbacks.Plugin):
     def _tidtoconf(self, tid):
         """Fetch what conference name (string) a team is in."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             query = "SELECT conference FROM confs WHERE id IN (SELECT conf FROM teams WHERE id=?)"
             cursor.execute(query, (tid,))
@@ -263,7 +261,7 @@ class CBB(callbacks.Plugin):
     def _confidtoname(self, confid):
         """Validate a conf and return its ID."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             query = "SELECT conference FROM confs WHERE id=?"
             cursor.execute(query, (confid,))
@@ -277,7 +275,7 @@ class CBB(callbacks.Plugin):
     def _d1confs(self):
         """Return a list of all D1 conference ids."""
 
-        with sqlite3.connect(self._cbbdb) as conn:
+        with sqlite3.connect(self._db) as conn:
             cursor = conn.cursor()
             query = "SELECT id FROM confs WHERE division=1"
             cursor.execute(query)
@@ -348,7 +346,7 @@ class CBB(callbacks.Plugin):
                 t['awayteam'] = cclsplit[2]
                 t['hometeam'] = cclsplit[3]
                 t['status'] = cclsplit[4]
-                t['quarter'] = cclsplit[6]
+                t['period'] = cclsplit[6]
                 t['time'] = cclsplit[7]
                 t['awayscore'] = int(cclsplit[8])
                 t['homescore'] = int(cclsplit[9])
@@ -388,16 +386,6 @@ class CBB(callbacks.Plugin):
             self.log.info("_filtergame: teamidslist failed on one of AT: {0} HT: {1}".format(at, ht))
             return False
 
-    def _boldleader(self, awayteam, awayscore, hometeam, homescore):
-        """Conveinence function to bold the leader."""
-
-        if (int(awayscore) > int(homescore)): # visitor winning.
-            return "{0} {1} {2} {3}".format(ircutils.bold(awayteam), ircutils.bold(awayscore), hometeam, homescore)
-        elif (int(awayscore) < int(homescore)): # home winning.
-            return "{0} {1} {2} {3}".format(awayteam, awayscore, ircutils.bold(hometeam), ircutils.bold(homescore))
-        else: # tie.
-            return "{0} {1} {2} {3}".format(awayteam, awayscore, hometeam, homescore)
-
     def _rankings(self):
         """Fetch the AP/BCS rankings for display."""
 
@@ -431,16 +419,17 @@ class CBB(callbacks.Plugin):
     def _gctosec(self, s):
         """Convert seconds of clock into an integer of seconds remaining."""
 
-        #self.log.info("S IS: {0} AND TYPE: {1}".format(s, type(s)))
-        # 20:00 or :50.0
-        if isinstance(s, str):
-            if ':' in s:
-                l = s.split(':')
-                return int(int(l[0]) * 60 + int(l[1]))
-            else:
-                return int(round(float(s)))
-        else:
-            return s
+        # self.log.info("S IS: {0} AND TYPE: {1}".format(s, type(s)))
+        # 20:00 or :50.0 :00.0
+        if s.startswith(":"):  # strip leading ':'
+            s = s[1:]
+        # now, if we're over 60s, time will look like 1:01. if we're under, it is :50.0
+        if '.' in s:  # under 60s.
+            s = s.replace(':', '')  # strip :, so we're left with 50.0.
+            return int(float(s))  # convert to integer.
+        else:  # we're over 60s. Time will look like 1:01.
+            l = s.split(':')  # split and do some math below
+            return (int(l[0]) * 60 + int(l[1]))
 
     ######################
     # CHANNEL MANAGEMENT #
@@ -529,7 +518,7 @@ class CBB(callbacks.Plugin):
                 if optchannel not in irc.state.channels:
                     irc.reply("ERROR: '{0}' is not a valid channel. You must add a channel that we are in.".format(optchannel))
                     return
-            # test for valid team now.
+            # test for valid conf now.
             confid = self._validconf(optarg)
             if not confid: # invalid arg(conf)
                 irc.reply("ERROR: '{0}' is an invalid conference. Must be one of: {1}".format(optarg, " | ".join(sorted(self._confs().values()))))
@@ -563,6 +552,34 @@ class CBB(callbacks.Plugin):
 
     cbbchannel = wrap(cbbchannel, [('checkCapability', 'admin'), ('somethingWithoutSpaces'), optional('channel'), optional('text')])
 
+    #######################
+    # INTERNAL FORMATTING #
+    #######################
+
+    def _boldleader(self, awayteam, awayscore, hometeam, homescore):
+        """Conveinence function to bold the leader."""
+
+        if (int(awayscore) > int(homescore)): # visitor winning.
+            return "{0} {1} {2} {3}".format(ircutils.bold(awayteam), ircutils.bold(awayscore), hometeam, homescore)
+        elif (int(awayscore) < int(homescore)): # home winning.
+            return "{0} {1} {2} {3}".format(awayteam, awayscore, ircutils.bold(hometeam), ircutils.bold(homescore))
+        else: # tie.
+            return "{0} {1} {2} {3}".format(awayteam, awayscore, hometeam, homescore)
+
+    def _scoreformat(self, v):
+        """Conveinence function to format score reporting for alerts/halftime/etc."""
+
+        at = self._tidwrapper(v['awayteam']) # fetch visitor.
+        ht = self._tidwrapper(v['hometeam']) # fetch home.
+        gamestr = self._boldleader(at, v['awayscore'], ht, v['homescore'])
+        if (v['period'] > 2):  # if > 2, we're in "overtime".
+            qtrstr = "{0} {1}OT".format(games2[k]['time'], int(v['period'])-1)
+        else:  # in 1st or 2nd half.
+            qtrstr = "{0} {1}H".format(games2[k]['time'], v['period'])
+        mstr = "{0} :: {1}".format(gamestr, ircutils.bold(qtrstr))
+        # now return
+        return mstr
+
     ###################
     # PUBLIC COMMANDS #
     ###################
@@ -572,7 +589,7 @@ class CBB(callbacks.Plugin):
         Display all current games in the self.games
         """
 
-        games = self._fetchgames(filt=False)
+        games = self._fetchgames(filt=True)
         if not games:
             irc.reply("ERROR: Fetching games.")
             return
@@ -583,8 +600,8 @@ class CBB(callbacks.Plugin):
 
     cbbgames = wrap(cbbgames)
 
-    #def checkcfb(self, irc):
-    def checkcbb(self, irc, msg, args):
+    def checkcfb(self, irc):
+    #def checkcbb(self, irc, msg, args):
         """
         Main loop.
         """
@@ -623,50 +640,18 @@ class CBB(callbacks.Plugin):
             if k in games2: # must mate keys between games1 and games2.
                 # ACTIVE GAME EVENTS HERE
                 if ((v['status'] == "P") and (games2[k]['status'] == "P")):
-                    # make sure the event is dupedict so we can print events.
-                    if k not in self.dupedict:
-                        self.dupedict[k] = set([]) # add.
-                    # SCORING PLAY.
-                    if ((games2[k]['awayscore'] > v['awayscore']) or (games2[k]['homescore'] > v['homescore'])):
-                        self.log.info("Should post scoring event from {0}".format(k))
-                        # first, get some basics with teamnames.
-                        at = self._tidwrapper(v['awayteam'], d=True) # fetch visitor.
-                        ht = self._tidwrapper(v['hometeam'], d=True) # fetch home.
-                        # get the score diff so we can figure out the score type and who scored.
-                        apdiff = abs((int(v['awayscore'])-int(games2[k]['awayscore']))) # awaypoint diff.
-                        hpdiff = abs((int(v['homescore'])-int(games2[k]['homescore']))) # homepoint diff.
-                        if apdiff != 0: # awayscore is not 0, ie: awayteam scored.
-                            sediff = apdiff # int
-                            seteam = at['team'] # get awayteam.
-                        else: # hometeam scored.
-                            sediff = hpdiff # int
-                            seteam = ht['team'] # get awayteam.
-                        # figure out the scoretype.
-                        setype = self._scoretype(sediff) # figure out score type.
-                        # we need to reconstruct at/ht as a string. since we called tidwrapper with d=True, we have to reattach the ranking, if present.
-                        if 'rank' in at: # we have rank so (#)Team.
-                            at = "({0}){1}".format(at['rank'], at['team'])
-                        else: # no rank.
-                            at = "{0}".format(at['team'])
-                        if 'rank' in ht: # do the same for the hometeam.
-                            ht = "({0}){1}".format(ht['rank'], ht['team'])
-                        else: # no rank.
-                            ht = "{0}".format(ht['team'])
-                        # now construct the rest of the string.
-                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore']) # bold the leader.
-                        scoretime = "{0} {1}".format(utils.str.ordinal(games2[k]['quarter']), games2[k]['time']) # score time.
-                        se = self._scoreevent(v['hometeam']) # use the hometeam id for plays-### (scoreevent page).
-                        if se: # we got scoringevent back.
-                            # make sure this event has not been posted yet.
-                            if se['id'] not in self.dupedict[k]: # we have NOT posted it yet. lets format for output.
-                                mstr = "{0} :: {1} :: {2} :: {3} ({4})".format(gamestr, ircutils.bold(setype), seteam, se['event'], scoretime) # lets construct the string.
-                                self._post(irc, v['awayteam'], v['hometeam'], mstr) # post to irc.
-                                self.dupedict[k].add(se['id']) # add to dupedict.
-                        else: # scoring event did not work. just post a generic string. this could be buggy.
-                            mstr = "{0} :: {1} :: {2} ({3})".format(gamestr, ircutils.bold(setype), seteam, scoretime)
-                            self._post(irc, v['awayteam'], v['hometeam'], mstr) # post to irc.
-                    # UPSET ALERT. CHECKS ONLY IN 2ND HALF.
-                    if ((games2[k]['period'] in ("2")) and (v['time'] != games2[k]['time']) and (self._gctosec(v['time']) >= 120) and (self._gctosec(games2[k]['time']) < 120)):
+                    # WE CHECK FOR THE 10 MINUTE MARK IN THE 1ST/2ND HALF AND FIRE THE SCORE HERE.
+                    if ((v['time'] != games2[k]['time']) and (games2[k]['period'] in ("1", "2")) and (self._gctosec(v['time']) >= 600) and (self._gctosec(games2[k]['time']) < 600)):
+                        self.log.info("Should fire 10 minute score alert in {0}".format(k))
+                        mstr = self._scoreformat(games2[k])  # send to score formatter.
+                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
+                    # WE NOW CHECK AT THE 1 MINUTE MARK OF THE 2ND HALF OR ABOVE (OT PERIODS) FOR A CLOSE SCORE (WITHIN 6 PTS) FOR NOTIFICATION.
+                    if ((v['time'] != games2[k]['time']) and (int(games2[k]['period']) > 1) and (self._gctosec(v['time']) >= 60) and (self._gctosec(games2[k]['time']) < 60) and (abs(int(games2[k]['awayscore'])-int(games2[k]['homescore'])) < 8)):
+                        self.log.info("Should fire 1 minute close score alert in {0}".format(k))
+                        mstr = self._scoreformat(games2[k])  # send to score formatter.
+                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
+                    # UPSET ALERT. CHECKS ONLY IN 2ND HALF AND ANY OT PERIOD.
+                    if ((games2[k]['period'] >= "2") and (v['time'] != games2[k]['time']) and (self._gctosec(v['time']) >= 120) and (self._gctosec(games2[k]['time']) < 120)):
                         #self.log.info("inside upset alert {0}".format(k))
                         # fetch teams with ranking in dict so we can determine if there is a potential upset on hand.
                         at = self._tidwrapper(v['awayteam'], d=True) # fetch visitor.
@@ -718,15 +703,6 @@ class CBB(callbacks.Plugin):
                                 gamestr = self._boldleader(self._tidwrapper(v['awayteam']), games2[k]['awayscore'], self._tidwrapper(v['hometeam']), games2[k]['homescore'])
                                 mstr = "{0} :: {1}".format(gamestr, upsetstr)
                                 self._post(irc, v['awayteam'], v['hometeam'], mstr)
-                    # WE CHECK FOR THE 10 MINUTE MARK IN THE 1ST/2ND HALF AND FIRE THE SCORE HERE.
-                    if ((v['time'] != games2[k]['time']) and (games2[k]['period'] in ("1", "2")) and (self._gctosec(v['time']) >= 600) and (self._gctosec(games2[k]['time']) < 600)):
-                        self.log.info("Should end of quarter in {0}".format(k))
-                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
-                        ht = self._tidwrapper(v['hometeam']) # fetch home.
-                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
-                        qtrstr = "{0}H {1}".format(v['period'], games2[k]['time'])
-                        mstr = "{0} :: {1}".format(gamestr, ircutils.bold(qtrstr))
-                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
                     # HALFTIME IN
                     if ((v['time'] != games2[k]['time']) and (games2[k]['period'] == "1") and (games2[k]['time'] == ":00.0")):
                         self.log.info("Should fire halftime in {0}".format(k))
@@ -746,10 +722,10 @@ class CBB(callbacks.Plugin):
                     # OT NOTIFICATION
                     if ((v['period'] != games2[k]['period']) and (int(games2[k]['period']) > 2)):
                         self.log.info("Should fire OT notification in {0}".format(k))
-                        otper = "Start OT{0}".format(int(games2[k]['period'])-2) # should start with 3, which is OT1.
                         at = self._tidwrapper(v['awayteam']) # fetch visitor.
                         ht = self._tidwrapper(v['hometeam']) # fetch home.
                         gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
+                        otper = "Start OT{0}".format(int(games2[k]['period'])-2) # should start with 3, which is OT1.
                         mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor(otper, 'green'))
                         self._post(irc, v['awayteam'], v['hometeam'], mstr)
                 # EVENTS OUTSIDE OF AN ACTIVE GAME.
@@ -757,9 +733,6 @@ class CBB(callbacks.Plugin):
                     # TIPOFF.
                     if ((v['status'] == "S") and (games2[k]['status'] == "P")):
                         self.log.info("{0} is tipping off.".format(k))
-                        # add game into dupedict.
-                        if k not in self.dupedict:
-                            self.dupedict[k] = set([])
                         # now construct kickoff event.
                         at = self._tidwrapper(v['awayteam']) # fetch visitor.
                         ht = self._tidwrapper(v['hometeam']) # fetch home.
@@ -779,9 +752,6 @@ class CBB(callbacks.Plugin):
                         else:
                             mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor("F", 'red'))
                         self._post(irc, v['awayteam'], v['hometeam'], mstr)
-                        # lets now try to remove from dupedict.
-                        if k in self.dupedict:
-                            del self.dupedict[k] # delete.
                     # GAME GOES INTO A DELAY.
                     if ((v['status'] == "P") and (games2[k]['status'] == "D")):
                         self.log.info("{0} is going into delay.".format(k))
@@ -825,7 +795,7 @@ class CBB(callbacks.Plugin):
             self.nextcheck = self._utcnow()+600 # 10 minutes from now.
             self.log.info("checkcfb: no active games and I have not got new games yet, so I am holding off for 10 minutes.")
 
-    checkcbb = wrap(checkcbb)
+    #checkcbb = wrap(checkcbb)
 
 Class = CBB
 
