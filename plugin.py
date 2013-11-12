@@ -572,10 +572,10 @@ class CBB(callbacks.Plugin):
         at = self._tidwrapper(v['awayteam']) # fetch visitor.
         ht = self._tidwrapper(v['hometeam']) # fetch home.
         gamestr = self._boldleader(at, v['awayscore'], ht, v['homescore'])
-        if (v['period'] > 2):  # if > 2, we're in "overtime".
-            qtrstr = "{0} {1}OT".format(games2[k]['time'], int(v['period'])-1)
+        if (int(v['period']) > 2):  # if > 2, we're in "overtime".
+            qtrstr = "{0} {1}OT".format(v['time'], int(v['period'])-2)
         else:  # in 1st or 2nd half.
-            qtrstr = "{0} {1}H".format(games2[k]['time'], v['period'])
+            qtrstr = "{0} {1}".format(v['time'], utils.str.ordinal(v['period']))
         mstr = "{0} :: {1}".format(gamestr, ircutils.bold(qtrstr))
         # now return
         return mstr
@@ -650,6 +650,31 @@ class CBB(callbacks.Plugin):
                         self.log.info("Should fire 1 minute close score alert in {0}".format(k))
                         mstr = self._scoreformat(games2[k])  # send to score formatter.
                         self._post(irc, v['awayteam'], v['hometeam'], mstr)
+                    # HALFTIME IN
+                    if ((v['time'] != games2[k]['time']) and (games2[k]['period'] == "1") and (games2[k]['time'] == ":00.0")):
+                        self.log.info("Should fire halftime in {0}".format(k))
+                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
+                        ht = self._tidwrapper(v['hometeam']) # fetch home.
+                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
+                        mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor("HALFTIME", 'yellow'))
+                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
+                    # HALFTIME OUT
+                    if ((v['period'] != games2[k]['period']) and (v['time'] != games2[k]['time']) and (games2[k]['period'] == "2") and (games2[k]['time'] == "20:00")):
+                        self.log.info("Should fire 2nd half in {0}".format(k))
+                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
+                        ht = self._tidwrapper(v['hometeam']) # fetch home.
+                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
+                        mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor("Start 2nd Half", 'green'))
+                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
+                    # OT NOTIFICATION
+                    if ((v['period'] != games2[k]['period']) and (int(games2[k]['period']) > 2)):
+                        self.log.info("Should fire OT notification in {0}".format(k))
+                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
+                        ht = self._tidwrapper(v['hometeam']) # fetch home.
+                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
+                        otper = "Start OT{0}".format(int(games2[k]['period'])-2) # should start with 3, which is OT1.
+                        mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor(otper, 'green'))
+                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
                     # UPSET ALERT. CHECKS ONLY IN 2ND HALF AND ANY OT PERIOD.
                     if ((games2[k]['period'] >= "2") and (v['time'] != games2[k]['time']) and (self._gctosec(v['time']) >= 120) and (self._gctosec(games2[k]['time']) < 120)):
                         #self.log.info("inside upset alert {0}".format(k))
@@ -703,31 +728,6 @@ class CBB(callbacks.Plugin):
                                 gamestr = self._boldleader(self._tidwrapper(v['awayteam']), games2[k]['awayscore'], self._tidwrapper(v['hometeam']), games2[k]['homescore'])
                                 mstr = "{0} :: {1}".format(gamestr, upsetstr)
                                 self._post(irc, v['awayteam'], v['hometeam'], mstr)
-                    # HALFTIME IN
-                    if ((v['time'] != games2[k]['time']) and (games2[k]['period'] == "1") and (games2[k]['time'] == ":00.0")):
-                        self.log.info("Should fire halftime in {0}".format(k))
-                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
-                        ht = self._tidwrapper(v['hometeam']) # fetch home.
-                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
-                        mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor("HALFTIME", 'yellow'))
-                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
-                    # HALFTIME OUT
-                    if ((v['period'] != games2[k]['period']) and (v['time'] != games2[k]['time']) and (games2[k]['period'] == "2") and (games2[k]['time'] == "20:00")):
-                        self.log.info("Should fire 2nd half in {0}".format(k))
-                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
-                        ht = self._tidwrapper(v['hometeam']) # fetch home.
-                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
-                        mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor("Start 2nd Half", 'green'))
-                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
-                    # OT NOTIFICATION
-                    if ((v['period'] != games2[k]['period']) and (int(games2[k]['period']) > 2)):
-                        self.log.info("Should fire OT notification in {0}".format(k))
-                        at = self._tidwrapper(v['awayteam']) # fetch visitor.
-                        ht = self._tidwrapper(v['hometeam']) # fetch home.
-                        gamestr = self._boldleader(at, games2[k]['awayscore'], ht, games2[k]['homescore'])
-                        otper = "Start OT{0}".format(int(games2[k]['period'])-2) # should start with 3, which is OT1.
-                        mstr = "{0} :: {1}".format(gamestr, ircutils.mircColor(otper, 'green'))
-                        self._post(irc, v['awayteam'], v['hometeam'], mstr)
                 # EVENTS OUTSIDE OF AN ACTIVE GAME.
                 else:
                     # TIPOFF.
