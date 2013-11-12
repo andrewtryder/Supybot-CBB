@@ -572,10 +572,17 @@ class CBB(callbacks.Plugin):
         at = self._tidwrapper(v['awayteam']) # fetch visitor.
         ht = self._tidwrapper(v['hometeam']) # fetch home.
         gamestr = self._boldleader(at, v['awayscore'], ht, v['homescore'])
+        # format time
+        if v['time'].startswith(':'):  # below 1 minute so time looks like :57.6
+            t =  v['time'][1:]  # strip the :
+        else:  # regular time
+            t = v['time']
+        # format period and construct string.
         if (int(v['period']) > 2):  # if > 2, we're in "overtime".
-            qtrstr = "{0} {1}OT".format(v['time'], int(v['period'])-2)
+            qtrstr = "{0} {1}OT".format(t, int(v['period'])-2)
         else:  # in 1st or 2nd half.
-            qtrstr = "{0} {1}".format(v['time'], utils.str.ordinal(v['period']))
+            qtrstr = "{0} {1}".format(t, utils.str.ordinal(v['period']))
+        # finally, construct the rest
         mstr = "{0} :: {1}".format(gamestr, ircutils.bold(qtrstr))
         # now return
         return mstr
