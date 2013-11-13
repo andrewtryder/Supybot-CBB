@@ -341,7 +341,7 @@ class CBB(callbacks.Plugin):
             if line.startswith('g|'): # only games.
                 cclsplit = line.split('|') # split.
                 # g|201311100059|416|59|S|0|1|20:00|0|0|1384104600|1|4|1|4
-                # 1 = gid, 2 = at, 3 = ht, 4 = status, 5 = ?, 6 = qtr?, 7 = time?, 8 = as?, 9 = hs
+                # 0 = g, 1 = gid, 2 = at, 3 = ht, 4 = status, 5 = ?, 6 = half, 7 = time, 8 = as, 9 = hs, 10 = ?, 11 = ?, 12 = ?, 13 = ?
                 t = {} # tmp dict for each line.
                 t['awayteam'] = cclsplit[2]
                 t['hometeam'] = cclsplit[3]
@@ -354,7 +354,7 @@ class CBB(callbacks.Plugin):
                 # now we need to test if we should filter.
                 if filt: # True. filtertest will be True if we should include the game. False if we should skip/pass over.
                     filtertest = self._filtergame(t['awayteam'], t['hometeam'])
-                    if filtertest: # add into games dict.
+                    if filtertest: # True. add into games dict.
                        games[cclsplit[1]] = t
                 else: # False. Don't filter. Add everything.
                     games[cclsplit[1]] = t
@@ -362,10 +362,10 @@ class CBB(callbacks.Plugin):
         if len(games) == 0: # no games.
             self.log.error("ERROR: No matching lines in _txttodict")
             self.log.error("ERROR: _txttodict: {0}".format(txt))
+            # should we add delay here?
             return None
         else:
             return games
-
 
     def _filtergame(self, at, ht):
         """With at and ht ids, we need to test if we should filter."""
@@ -373,7 +373,7 @@ class CBB(callbacks.Plugin):
         # check to see what activeconfs comes from.
         if len(self.channels) != 0: # we have "active" confs. consolidate the sets from each active channel.
             activeconfs = set(chain.from_iterable(([v for (k, v) in self.channels.items()])))
-        else: # no active confs so we just grab FBS conf ids.
+        else: # no active confs so we just grab D1 conf ids.
             activeconfs = set(self._d1confs())
         # now lets take the at+ht ids and test.
         teamidslist = self._tidstoconfids(at, ht) # grab the list of conf ids for this game.
@@ -492,11 +492,12 @@ class CBB(callbacks.Plugin):
     cbbliveoff = wrap(cbbliveoff, [('channel')])
 
     def cbbchannel(self, irc, msg, args, op, optchannel, optarg):
-        """<add|list|del|confs> <#channel> <CONFERENCE|TOP25>
+        """<add|list|del|confs> <#channel> <CONFERENCE|D1>
 
-        Add or delete conference(s)/TOP25 from a specific channel's output.
-        Use conference name or TOP25 for AP Top25 matchups. Can only specify one at a time.
-        Ex: add #channel1 TOP25 OR add #channel2 SEC OR del #channel1 ALL OR list
+        Add or delete conference(s)/D1 from a specific channel's output.
+        Use conference name or D1 for all D1 confs on add/del ops. Otherwise, can only specify one at a time.
+
+        Ex: add #channel1 D1 OR add #channel2 SEC OR del #channel1 ALL OR list OR confs
         """
 
         # first, lower operation.
@@ -518,17 +519,26 @@ class CBB(callbacks.Plugin):
                 if optchannel not in irc.state.channels:
                     irc.reply("ERROR: '{0}' is not a valid channel. You must add a channel that we are in.".format(optchannel))
                     return
-            # test for valid conf now.
-            confid = self._validconf(optarg)
+            # test for valid conf now. we have a "special" D1 here to add all D1.
+            if ((optarg == "D1") or (optarg == "d1")):  # we want to add all D1 confs.
+                confid = self._d1confs()  # grab the list of D1 confs.
+            else:  # not D1, so check the argument.
+                confid = self._validconf(optarg)
+            # validate it before we proceed.
             if not confid: # invalid arg(conf)
                 irc.reply("ERROR: '{0}' is an invalid conference. Must be one of: {1}".format(optarg, " | ".join(sorted(self._confs().values()))))
                 return
         # main meat part.
         # now we handle each op individually.
-        if op == 'add': # add output to channel.
-            self.channels.setdefault(optchannel, set()).add(confid) # add it.
-            self._savepickle() # save.
+        if op == 'add': # add output to channel. we use a set so there is no need to check for dupes.
+            if isinstance(confid, list):  # confids = list, ie: D1 is optarg
+                for cid in confid:  # iterate over each and add.
+                    self.channels.setdefault(optchannel, set()).add(cid) # add it.
+            else:
+                self.channels.setdefault(optchannel, set()).add(confid) # add it.
+            # now output and save.
             irc.reply("I have added {0} into {1}".format(optarg, optchannel))
+            self._savepickle() # save.
         elif op == 'confs': # list confs.
             irc.reply("Valid Confs for cfbchannel: {0}".format(" | ".join(sorted(self._confs().values()))))
         elif op == 'list': # list channels.
@@ -539,14 +549,23 @@ class CBB(callbacks.Plugin):
                     irc.reply("{0} :: {1}".format(k, " | ".join([self._confidtoname(q) for q in v])))
         elif op == 'del': # delete an item from channels.
             if optchannel in self.channels:
-                if confid in self.channels[optchannel]: # id is already in.
-                    self.channels[optchannel].remove(confid) # remove it.
-                    if len(self.channels[optchannel]) == 0: # none left.
-                        del self.channels[optchannel] # delete the channel key.
-                    self._savepickle() # save it.
-                    irc.reply("I have successfully removed {0} from {1}".format(optarg, optchannel))
-                else:
-                    irc.reply("ERROR: I do not have {0} in {1}".format(optarg, optchannel))
+                if isinstance(confid, list):  # confids = list, ie: D1 is optarg.
+                    for cid in confid:  # iterate over each.
+                        self.channels[optchannel].discard(cid) # remove it. don't raise KeyError if not.
+                    # report success (no way to know).
+                    irc.reply("I have successfully removed all D1 confs from {0}".format(optchannel))
+                else:  # confid is NOT a list, ie: individual string.
+                    if confid in self.channels[optchannel]: # id is already in.
+                        self.channels[optchannel].remove(confid) # remove it.
+                        irc.reply("I have successfully removed {0} from {1}".format(optarg, optchannel))
+                    else:
+                        irc.reply("ERROR: I do not have {0} in {1}".format(optarg, optchannel))
+                        return
+                # now that we're done doing the delete operations, check if we have any left.
+                if len(self.channels[optchannel]) == 0: # none left.
+                    del self.channels[optchannel] # delete the channel key.
+                # save the pickle.
+                self._savepickle() # save it.
             else:
                 irc.reply("ERROR: I do not have {0} in {1}".format(optarg, optchannel))
 
@@ -593,10 +612,11 @@ class CBB(callbacks.Plugin):
 
     def cbbgames(self, irc, msg, args):
         """
-        Display all current games in the self.games
+        Display all current games in the self.games. (DEBUG COMMAND)
         """
 
-        games = self._fetchgames(filt=True)
+        #games = self._fetchgames(filt=True)
+        games = self.games
         if not games:
             irc.reply("ERROR: Fetching games.")
             return
