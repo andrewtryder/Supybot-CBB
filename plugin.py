@@ -639,6 +639,7 @@ class CBB(callbacks.Plugin):
         if self.nextcheck: # set
             utcnow = self._utcnow()
             if self.nextcheck > utcnow: # in the future so we backoff.
+                self.log.info("checkcfb: nextcheck is {0}s from now".format(abs(utcnow-self.nextcheck)))
                 return
             else: # in the past so lets reset it. this means that we've reached the time where firstgametime should begin.
                 self.log.info("checkcfb: nextcheck has passed. we are resetting and continuing normal operations.")
