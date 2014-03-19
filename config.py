@@ -1,5 +1,5 @@
 ###
-# Copyright (c) 2013, spline
+# Copyright (c) 2013-2014, spline
 # All rights reserved.
 #
 #
@@ -26,8 +26,5 @@ def configure(advanced):
 
 CBB = conf.registerPlugin('CBB')
 # This is where your configuration variables (if any) should go.  For example:
-# conf.registerGlobalValue(CBB, 'someConfigVariableName',
-#     registry.Boolean(False, _("""Help for someConfigVariableName.""")))
-
-
+conf.registerChannelValue(CBB, 'displayOnlyActiveTop25', registry.Boolean(False, _("""Only display Top25 games within active confs?""")))
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

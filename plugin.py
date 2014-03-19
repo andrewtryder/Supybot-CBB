@@ -1,5 +1,5 @@
 ###
-# Copyright (c) 2013, spline
+# Copyright (c) 2013-2014, spline
 # All rights reserved.
 #
 #
@@ -38,7 +38,7 @@ class CBB(callbacks.Plugin):
     def __init__(self, irc):
         self.__parent = super(CBB, self)
         self.__parent.__init__(irc)
-        # our cfblive db.
+        # our cbblive db.
         self._db = os.path.abspath(os.path.dirname(__file__)) + '/db/cbb.db'
         # initial states for channels.
         self.channels = {} # dict for channels with values as teams/ids
@@ -56,21 +56,21 @@ class CBB(callbacks.Plugin):
         if not self.games:
             self.games = self._fetchgames()
         # setup the function for cron.
-        def checkcfbcron():
+        def checkcbbcron():
             try:
-                self.checkcfb(irc)
+                self.checkcbb(irc)
             except Exception, e: # something broke. The plugin will stop itself from reporting.
                 self.log.error("cron: ERROR :: {0}".format(e))
                 self.nextcheck = self._utcnow()+72000 # add some major delay so the plugin does not spam.
         # and add the cronjob.
         try: # add our cronjob.
-            schedule.addPeriodicEvent(checkcfbcron, 30, now=True, name='checkcbb')
+            schedule.addPeriodicEvent(checkcbbcron, 30, now=True, name='checkcbb')
         except AssertionError:
             try:
-                schedule.removeEvent('checkcfb')
+                schedule.removeEvent('checkcbb')
             except KeyError:
                 pass
-            schedule.addPeriodicEvent(checkcfbcron, 30, now=True, name='checkcbb')
+            schedule.addPeriodicEvent(checkcbbcron, 30, now=True, name='checkcbb')
 
     def die(self):
         try: # remove cronjob.
@@ -419,14 +419,12 @@ class CBB(callbacks.Plugin):
     def _gctosec(self, s):
         """Convert seconds of clock into an integer of seconds remaining."""
 
-        # self.log.info("S IS: {0} AND TYPE: {1}".format(s, type(s)))
-        # 20:00 or :50.0 :00.0
         if s.startswith(":"):  # strip leading ':'
             s = s[1:]
         # now, if we're over 60s, time will look like 1:01. if we're under, it is :50.0
         if '.' in s:  # under 60s.
             s = s.replace(':', '')  # strip :, so we're left with 50.0.
-            return int(float(s))  # convert to integer.
+            return int(float(s))  # convert to integer from float.
         else:  # we're over 60s. Time will look like 1:01.
             l = s.split(':')  # split and do some math below
             return (int(l[0]) * 60 + int(l[1]))
@@ -540,10 +538,10 @@ class CBB(callbacks.Plugin):
             irc.reply("I have added {0} into {1}".format(optarg, optchannel))
             self._savepickle() # save.
         elif op == 'confs': # list confs.
-            irc.reply("Valid Confs for cfbchannel: {0}".format(" | ".join(sorted(self._confs().values()))))
+            irc.reply("Valid Confs for cbbchannel: {0}".format(" | ".join(sorted(self._confs().values()))))
         elif op == 'list': # list channels.
             if len(self.channels) == 0: # no channels.
-                irc.reply("ERROR: I have no active channels defined. Please use the cfbchannel add operation to add a channel.")
+                irc.reply("ERROR: I have no active channels defined. Please use the cbbchannel add operation to add a channel.")
             else: # we do have channels.
                 for (k, v) in self.channels.items(): # iterate through and output
                     irc.reply("{0} :: {1}".format(k, " | ".join([self._confidtoname(q) for q in v])))
@@ -627,22 +625,22 @@ class CBB(callbacks.Plugin):
 
     cbbgames = wrap(cbbgames)
 
-    def checkcfb(self, irc):
+    def checkcbb(self, irc):
     #def checkcbb(self, irc, msg, args):
         """
         Main loop.
         """
 
         # debug.
-        self.log.info("checkcfb: starting...")
+        self.log.info("checkcbb: starting...")
         # before anything, check if nextcheck is set and is in the future.
         if self.nextcheck: # set
             utcnow = self._utcnow()
             if self.nextcheck > utcnow: # in the future so we backoff.
-                self.log.info("checkcfb: nextcheck is {0}s from now".format(abs(utcnow-self.nextcheck)))
+                self.log.info("checkcbb: nextcheck is {0}s from now".format(abs(utcnow-self.nextcheck)))
                 return
             else: # in the past so lets reset it. this means that we've reached the time where firstgametime should begin.
-                self.log.info("checkcfb: nextcheck has passed. we are resetting and continuing normal operations.")
+                self.log.info("checkcbb: nextcheck has passed. we are resetting and continuing normal operations.")
                 self.nextcheck = None
         # we must have initial games. bail if not.
         if not self.games:
@@ -650,14 +648,14 @@ class CBB(callbacks.Plugin):
             return
         # check and see if we have initial games, again, but bail if no.
         if not self.games:
-            self.log.error("checkcfb: I did not have any games in self.games")
+            self.log.error("checkcbb: I did not have any games in self.games")
             return
         else: # setup the initial games.
             games1 = self.games
         # now we must grab the new status to compare to.
         games2 = self._fetchgames()
         if not games2: # something went wrong so we bail.
-            self.log.error("checkcfb: fetching games2 failed.")
+            self.log.error("checkcbb: fetching games2 failed.")
             return
 
         # before we run the main event handler, make sure we have rankings.
@@ -810,18 +808,18 @@ class CBB(callbacks.Plugin):
             utcnow = self._utcnow() # grab UTC now.
             if firstgametime > utcnow: # make sure it is in the future so lock is not stale.
                 self.nextcheck = firstgametime # set to the "first" game with 'S'.
-                self.log.info("checkcfb: we have games in the future (S) so we're setting the next check {0} seconds from now".format(firstgametime-utcnow))
+                self.log.info("checkcbb: we have games in the future (S) so we're setting the next check {0} seconds from now".format(firstgametime-utcnow))
             else: # firstgametime is NOT in the future. this is a problem.
                 fgtdiff = abs(firstgametime-utcnow) # get how long ago the first game should have been.
                 if fgtdiff < 3601: # if less than an hour ago, just basically pass.
                     self.nextcheck = None
-                    self.log.info("checkcfb: firstgametime has passed but is under an hour so we resume normal operations.")
+                    self.log.info("checkcbb: firstgametime has passed but is under an hour so we resume normal operations.")
                 else: # over an hour so we set firstgametime an hour from now.
                     self.nextcheck = utcnow+600
-                    self.log.info("checkcfb: firstgametime is over an hour late so we're going to backoff for 10 minutes")
+                    self.log.info("checkcbb: firstgametime is over an hour late so we're going to backoff for 10 minutes")
         else: # everything is "F" (Final). we want to backoff so we're not flooding.
             self.nextcheck = self._utcnow()+600 # 10 minutes from now.
-            self.log.info("checkcfb: no active games and I have not got new games yet, so I am holding off for 10 minutes.")
+            self.log.info("checkcbb: no active games and I have not got new games yet, so I am holding off for 10 minutes.")
 
     #checkcbb = wrap(checkcbb)
 
