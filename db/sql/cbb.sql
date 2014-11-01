@@ -50,17 +50,19 @@ INSERT INTO teams VALUES ("99", "616", "Vermont Catamounts", "vad");  -- America
 INSERT INTO confs VALUES ("1", "170", "AAC");
 INSERT INTO teams VALUES ("170", "116", "Cincinnati Bearcats", "cbc");  -- American Athletic
 INSERT INTO teams VALUES ("170", "129", "Connecticut Huskies", "cbp");  -- American Athletic
+INSERT INTO teams VALUES ("170", "178", "East Carolina Pirates", "eac"); -- American Athletic
 INSERT INTO teams VALUES ("170", "254", "Houston Cougars", "ham");  -- American Athletic
-INSERT INTO teams VALUES ("170", "314", "Louisville Cardinals", "laq");  -- American Athletic
 INSERT INTO teams VALUES ("170", "349", "Memphis Tigers", "map");  -- American Athletic
-INSERT INTO teams VALUES ("170", "492", "Rutgers Scarlet Knights", "rak");  -- American Athletic
 INSERT INTO teams VALUES ("170", "526", "South Florida Bulls", "sav");  -- American Athletic
 INSERT INTO teams VALUES ("170", "515", "SMU Mustangs", "sbg");  -- American Athletic
-INSERT INTO teams VALUES ("101", "577", "Temple Owls", "tad");  -- American Athletic
+INSERT INTO teams VALUES ("170", "577", "Temple Owls", "tad");  -- American Athletic
+INSERT INTO teams VALUES ("170", "598", "Tulane Green Wave", "taz");  -- American Athletic
+INSERT INTO teams VALUES ("170", "599", "Tulsa Golden Hurricane", "tba");  -- American Athletic
 INSERT INTO teams VALUES ("170", "103", "UCF Knights", "cap");  -- American Athletic
 
 -- Atlantic 10 (A10)
 INSERT INTO confs VALUES ("1", "101", "A10");
+INSERT INTO teams VALUES ("101", "156", "Davidson Wildcats", "dad");  -- Atlantic 10
 INSERT INTO teams VALUES ("101", "157", "Dayton Flyers", "dae");  -- Atlantic 10
 INSERT INTO teams VALUES ("101", "174", "Duquesne Dukes", "dav");  -- Atlantic 10
 INSERT INTO teams VALUES ("101", "214", "Fordham Rams", "fao");  -- Atlantic 10
@@ -82,7 +84,7 @@ INSERT INTO teams VALUES ("6", "120", "Clemson Tigers", "cbg");  -- Atlantic Coa
 INSERT INTO teams VALUES ("6", "173", "Duke Blue Devils", "dau");  -- Atlantic Coast
 INSERT INTO teams VALUES ("6", "213", "Florida State Seminoles", "fan");  -- Atlantic Coast
 INSERT INTO teams VALUES ("6", "232", "Georgia Tech Yellow Jackets", "gah");  -- Atlantic Coast
-INSERT INTO teams VALUES ("6", "343", "Maryland Terrapins", "maj");  -- Atlantic Coast
+INSERT INTO teams VALUES ("6", "314", "Louisville Cardinals", "laq");  -- Atlantic Coast
 INSERT INTO teams VALUES ("6", "355", "Miami (FL) Hurricanes", "mav");  -- Atlantic Coast
 INSERT INTO teams VALUES ("6", "413", "North Carolina Tar Heels", "nav");  -- Atlantic Coast
 INSERT INTO teams VALUES ("6", "411", "North Carolina State Wolfpack", "nat");  -- Atlantic Coast
@@ -95,12 +97,10 @@ INSERT INTO teams VALUES ("6", "628", "Wake Forest Demon Deacons", "wad");  -- A
 
 -- Atlantic Sun
 INSERT INTO confs VALUES ("1", "107", "Atlantic Sun");
-INSERT INTO teams VALUES ("107", "176", "East Tennessee State Buccaneers", "eaa");  -- Atlantic Sun
 INSERT INTO teams VALUES ("107", "1383", "FGCU Eagles", "flg");  -- Atlantic Sun
 INSERT INTO teams VALUES ("107", "281", "Jacksonville Dolphins", "jab");  -- Atlantic Sun
 INSERT INTO teams VALUES ("107", "1374", "Kennesaw St.", "kns");  -- Atlantic Sun
 INSERT INTO teams VALUES ("107", "1281", "Lipscomb Bisons", "lbu");  -- Atlantic Sun
-INSERT INTO teams VALUES ("107", "350", "Mercer Bears", "maq");  -- Atlantic Sun
 INSERT INTO teams VALUES ("107", "434", "North Florida Ospreys", "nfl");  -- Atlantic Sun
 INSERT INTO teams VALUES ("107", "1506", "Northern Kentucky Norse", "nbj");
 INSERT INTO teams VALUES ("107", "548", "Stetson Hatters", "scd");  -- Atlantic Sun
@@ -135,6 +135,7 @@ INSERT INTO teams VALUES ("102", "682", "Xavier Musketeers", "xaa");  -- Big Eas
 -- Big Sky
 INSERT INTO confs VALUES ("1", "15", "Big Sky");
 INSERT INTO teams VALUES ("15", "184", "Eastern Washington Eagles", "eai");  -- Big Sky
+INSERT INTO teams VALUES ("15", "263", "Idaho Vandals", "iaa"); -- Big Sky
 INSERT INTO teams VALUES ("15", "265", "Idaho State Bengals", "iac");  -- Big Sky
 INSERT INTO teams VALUES ("15", "372", "Montana Grizzlies", "mbm");  -- Big Sky
 INSERT INTO teams VALUES ("15", "373", "Montana State Bobcats", "mbn");  -- Big Sky
@@ -158,7 +159,6 @@ INSERT INTO teams VALUES ("16", "1219", "Longwood Lancers", "lay");  -- Big Sout
 INSERT INTO teams VALUES ("16", "470", "Presbyterian Blue Hose", "paq");  -- Big South - South
 INSERT INTO teams VALUES ("16", "483", "Radford Highlanders", "raa");  -- Big South - North
 INSERT INTO teams VALUES ("16", "393", "UNC Asheville Bulldogs", "nab");  -- Big South - South
-INSERT INTO teams VALUES ("16", "621", "VMI Keydets", "vai");  -- Big South - North
 INSERT INTO teams VALUES ("16", "649", "Winthrop Eagles", "way");  -- Big South - South
 
 -- Big Ten
@@ -166,6 +166,7 @@ INSERT INTO confs VALUES ("1", "3", "BIG10");
 INSERT INTO teams VALUES ("3", "267", "Illinois Fighting Illini", "iae");  -- Big Ten
 INSERT INTO teams VALUES ("3", "271", "Indiana Hoosiers", "iai");  -- Big Ten
 INSERT INTO teams VALUES ("3", "276", "Iowa Hawkeyes", "ian");  -- Big Ten
+INSERT INTO teams VALUES ("3", "343", "Maryland Terrapins", "maj");  -- Big Ten
 INSERT INTO teams VALUES ("3", "357", "Michigan Wolverines", "max");  -- Big Ten
 INSERT INTO teams VALUES ("3", "358", "Michigan State Spartans", "may");  -- Big Ten
 INSERT INTO teams VALUES ("3", "363", "Minnesota Golden Gophers", "mbd");  -- Big Ten
@@ -174,6 +175,7 @@ INSERT INTO teams VALUES ("3", "421", "Northwestern Wildcats", "nbd");  -- Big T
 INSERT INTO teams VALUES ("3", "443", "Ohio State Buckeyes", "oad");  -- Big Ten
 INSERT INTO teams VALUES ("3", "459", "Penn State Nittany Lions", "paf");  -- Big Ten
 INSERT INTO teams VALUES ("3", "474", "Purdue Boilermakers", "pau");  -- Big Ten
+INSERT INTO teams VALUES ("3", "492", "Rutgers Scarlet Knights", "rak");  -- Big Ten
 INSERT INTO teams VALUES ("3", "657", "Wisconsin Badgers", "wbg");  -- Big Ten
 
 -- Big West
@@ -193,17 +195,17 @@ INSERT INTO confs VALUES ("1", "17", "Colonial");
 INSERT INTO teams VALUES ("17", "107", "Charleston Cougars", "cat");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "159", "Delaware Fightin' Blue Hens", "dag");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "172", "Drexel Dragons", "dat");  -- Colonial Athletic
+INSERT INTO teams VALUES ("17", "195", "Elon Phoenix", "eat");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "252", "Hofstra Pride", "hak");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "282", "James Madison Dukes", "jac");  -- Colonial Athletic
-INSERT INTO teams VALUES ("17", "398", "UNCW Seahawks", "nag");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "416", "Northeastern Huskies", "nay");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "595", "Towson Tigers", "tav");  -- Colonial Athletic
+INSERT INTO teams VALUES ("17", "398", "UNCW Seahawks", "nag");  -- Colonial Athletic
 INSERT INTO teams VALUES ("17", "658", "William & Mary Tribe", "wbh");  -- Colonial Athletic
 
 -- CUSA
 INSERT INTO confs VALUES ("1", "1", "CUSA");
 INSERT INTO teams VALUES ("1", "395", "Charlotte 49ers", "nad");  -- Conference USA
-INSERT INTO teams VALUES ("1", "178", "East Carolina Pirates", "eac");  -- Conference USA
 INSERT INTO teams VALUES ("1", "221", "Florida Atlantic Owls", "fav");  -- Conference USA
 INSERT INTO teams VALUES ("1", "212", "FIU Golden Panthers", "fam");  -- Conference USA
 INSERT INTO teams VALUES ("1", "313", "Louisiana Tech Bulldogs", "lap");  -- Conference USA
@@ -213,11 +215,10 @@ INSERT INTO teams VALUES ("1", "415", "North Texas Mean Green", "nax");  -- Conf
 INSERT INTO teams VALUES ("1", "447", "Old Dominion Monarchs", "oah");  -- Conference USA
 INSERT INTO teams VALUES ("1", "486", "Rice Owls", "rae");  -- Conference USA
 INSERT INTO teams VALUES ("1", "521", "Southern Miss Golden Eagles", "sbb");  -- Conference USA
-INSERT INTO teams VALUES ("1", "598", "Tulane Green Wave", "taz");  -- Conference USA
-INSERT INTO teams VALUES ("1", "599", "Tulsa Golden Hurricane", "tba");  -- Conference USA
 INSERT INTO teams VALUES ("1", "34", "UAB Blazers", "abh");  -- Conference USA
 INSERT INTO teams VALUES ("1", "589", "UTEP Miners", "tap");  -- Conference USA
 INSERT INTO teams VALUES ("1", "584", "UTSA Roadrunners", "tak");  -- Conference USA
+INSERT INTO teams VALUES ("1", "639", "Western Kentucky Hilltoppers", "wao");  -- Conference USA
 
 -- Horizon
 INSERT INTO confs VALUES ("1", "34", "Horizon");
@@ -234,7 +235,6 @@ INSERT INTO teams VALUES ("34", "685", "Youngstown State Penguins", "yab");  -- 
 -- Independents
 INSERT INTO confs VALUES ("1", "35", "Independents");
 INSERT INTO teams VALUES ("35", "1186", "NJIT Highlanders", "ncf");  -- Independents
-INSERT INTO teams VALUES ("35", "667", "Winston-Salem", "");  -- Independents
 
 -- Ivy
 INSERT INTO confs VALUES ("1", "18", "Ivy");
@@ -252,7 +252,6 @@ INSERT INTO confs VALUES ("1", "19", "MAAC");
 INSERT INTO teams VALUES ("19", "97", "Canisius Golden Griffins", "caj");  -- Metro Atlantic Athletic
 INSERT INTO teams VALUES ("19", "201", "Fairfield Stags", "fab");  -- Metro Atlantic Athletic
 INSERT INTO teams VALUES ("19", "275", "Iona Gaels", "iam");  -- Metro Atlantic Athletic
-INSERT INTO teams VALUES ("19", "318", "Loyola Maryland Greyhounds", "lau");  -- Patriot League
 INSERT INTO teams VALUES ("19", "335", "Manhattan Jaspers", "mab");  -- Metro Atlantic Athletic
 INSERT INTO teams VALUES ("19", "338", "Marist Red Foxes", "mae");  -- Metro Atlantic Athletic
 INSERT INTO teams VALUES ("19", "370", "Monmouth Hawks", "mbk");  -- Metro Atlantic Athletic
@@ -315,7 +314,7 @@ INSERT INTO teams VALUES ("112", "217", "Fresno State Bulldogs", "far");  -- Mou
 INSERT INTO teams VALUES ("112", "402", "Nevada Wolf Pack", "nak");  -- Mountain West
 INSERT INTO teams VALUES ("112", "404", "New Mexico Lobos", "nam");  -- Mountain West
 INSERT INTO teams VALUES ("112", "498", "San Diego State Aztecs", "sae");  -- Mountain West
-INSERT INTO teams VALUES ("111", "500", "San Jose State Spartans", "sag");  -- Mountain West
+INSERT INTO teams VALUES ("112", "500", "San Jose State Spartans", "sag");  -- Mountain West
 INSERT INTO teams VALUES ("112", "401", "UNLV Runnin' Rebels", "naj");  -- Mountain West
 INSERT INTO teams VALUES ("112", "611", "Utah State Aggies", "uaf");  -- Mountain West
 INSERT INTO teams VALUES ("112", "661", "Wyoming Cowboys", "wbk");  -- Mountain West
@@ -373,6 +372,7 @@ INSERT INTO teams VALUES ("24", "124", "Colgate Raiders", "cbk");  -- Patriot Le
 INSERT INTO teams VALUES ("24", "253", "Holy Cross Crusaders", "hal");  -- Patriot League
 INSERT INTO teams VALUES ("24", "298", "Lafayette Leopards", "laa");  -- Patriot League
 INSERT INTO teams VALUES ("24", "303", "Lehigh Mountain Hawks", "laf");  -- Patriot League
+INSERT INTO teams VALUES ("24", "318", "Loyola Maryland Greyhounds", "lau");  -- Patriot League
 INSERT INTO teams VALUES ("24", "392", "Navy Midshipmen", "naa");  -- Patriot League
 
 -- SEC
@@ -394,15 +394,14 @@ INSERT INTO teams VALUES ("10", "615", "Vanderbilt Commodores", "vac");  -- Sout
 
 -- Southern
 INSERT INTO confs VALUES ("1", "29", "Southern");
-INSERT INTO teams VALUES ("29", "16", "Appalachian State Mountaineers", "aap");  -- Southern
 INSERT INTO teams VALUES ("29", "581", "Chattanooga Mocs", "cdc");  -- Southern
 INSERT INTO teams VALUES ("29", "134", "Citadel Bulldogs", "cbv");  -- Southern
-INSERT INTO teams VALUES ("29", "156", "Davidson Wildcats", "dad");  -- Southern
-INSERT INTO teams VALUES ("29", "195", "Elon Phoenix", "eat");  -- Southern
+INSERT INTO teams VALUES ("29", "176", "East Tennessee State Buccaneers", "eaa");  -- Southern
 INSERT INTO teams VALUES ("29", "220", "Furman Paladins", "fau");  -- Southern
-INSERT INTO teams VALUES ("29", "226", "Georgia Southern Eagles", "gab");  -- Southern
+INSERT INTO teams VALUES ("29", "350", "Mercer Bears", "maq");  -- Southern
 INSERT INTO teams VALUES ("29", "496", "Samford Bulldogs", "sac");  -- Southern
 INSERT INTO teams VALUES ("29", "396", "UNCG Spartans", "nae");  -- Southern
+INSERT INTO teams VALUES ("29", "621", "VMI Keydets", "vai");  -- Southern
 INSERT INTO teams VALUES ("29", "644", "Western Carolina Catamounts", "wat");  -- Southern
 INSERT INTO teams VALUES ("29", "659", "Wofford Terriers", "wbi");  -- Southern
 
@@ -417,7 +416,6 @@ INSERT INTO teams VALUES ("28", "345", "McNeese State Cowboys", "mal");  -- Sout
 INSERT INTO teams VALUES ("28", "406", "New Orleans Privateers", "nao");
 INSERT INTO teams VALUES ("28", "409", "Nicholls Colonels", "nar");  -- Southland
 INSERT INTO teams VALUES ("28", "422", "Northwestern State Demons", "nbe");  -- Southland
-INSERT INTO teams VALUES ("28", "448", "Oral Roberts Golden Eagles", "oai");  -- Southland
 INSERT INTO teams VALUES ("28", "495", "Sam Houston State Bearkats", "sab");  -- Southland
 INSERT INTO teams VALUES ("28", "506", "Southeastern Louisiana Lions", "sam");  -- Southland
 INSERT INTO teams VALUES ("28", "547", "Stephen F. Austin Lumberjacks", "scc");  -- Southland
@@ -443,14 +441,17 @@ INSERT INTO teams VALUES ("194", "932", "IPFW Mastodons", "iav");  -- Summit
 INSERT INTO teams VALUES ("194", "1090", "IUPUI Jaguars", "iak");  -- Summit
 INSERT INTO teams VALUES ("194", "1337", "Nebraska Omaha Mavericks", "neo");  -- Summit
 INSERT INTO teams VALUES ("194", "1455", "North Dakota State Bison", "nds");  -- Summit
+INSERT INTO teams VALUES ("194", "448", "Oral Roberts Golden Eagles", "oai");  -- Summit
 INSERT INTO teams VALUES ("194", "1458", "South Dakota Coyotes", "say");  -- Summit
 INSERT INTO teams VALUES ("194", "1472", "South Dakota State Jackrabbits", "sds");  -- Summit
 INSERT INTO teams VALUES ("194", "638", "Western Illinois Leathernecks", "wan");  -- Summit
 
 -- Sun Belt
 INSERT INTO confs VALUES ("1", "5", "Sun Belt");
+INSERT INTO teams VALUES ("5", "16", "Appalachian State Mountaineers", "aap");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "22", "Arkansas State Red Wolves", "aav");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "20", "UALR Trojans", "aat");  -- Sun Belt
+INSERT INTO teams VALUES ("5", "226", "Georgia Southern Eagles", "gab");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "231", "Georgia State Panthers", "gag");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "550", "Louisiana Ragin' Cajuns", "scf");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "399", "Louisiana-Monroe Warhawks", "nah");  -- Sun Belt
@@ -458,7 +459,6 @@ INSERT INTO teams VALUES ("5", "524", "South Alabama Jaguars", "sbe");  -- Sun B
 INSERT INTO teams VALUES ("5", "552", "Texas State Bobcats", "sch");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "588", "UT Arlington Mavericks", "tao");  -- Sun Belt
 INSERT INTO teams VALUES ("5", "596", "Troy Trojans", "taw");  -- Sun Belt
-INSERT INTO teams VALUES ("5", "639", "Western Kentucky Hilltoppers", "wao");  -- Sun Belt
 
 -- West Coast
 INSERT INTO confs VALUES ("1", "110", "West Coast");
@@ -478,7 +478,6 @@ INSERT INTO confs VALUES ("1", "111", "WAC");
 INSERT INTO teams VALUES ("111", "1105", "CSU Bakersfield Roadrunners", "ccm");  -- Western Athletic
 INSERT INTO teams VALUES ("111", "112", "Chicago State Cougars", "cay");  -- Western Athletic
 INSERT INTO teams VALUES ("111", "237", "Grand Canyon Antelopes", "grand_canyon");
-INSERT INTO teams VALUES ("111", "263", "Idaho Vandals", "iaa");  -- Western Athletic
 INSERT INTO teams VALUES ("111", "405", "New Mexico State Aggies", "nan");  -- Western Athletic
 INSERT INTO teams VALUES ("111", "507", "Seattle Redhawks", "san");  -- Western Athletic
 INSERT INTO teams VALUES ("111", "601", "Texas-Pan American Broncs", "tbc");  -- Western Athletic
@@ -698,6 +697,7 @@ INSERT INTO teams VALUES ("31337", "1131", "Virginia Union Panthers", "");  -- C
 INSERT INTO teams VALUES ("31337", "1132", "Virginia State Trojans", "");  -- Central Intercollegiate Athletics Association
 INSERT INTO teams VALUES ("31337", "1276", "Fayetteville State Broncos", "");  -- Central Intercollegiate Athletics Association
 INSERT INTO teams VALUES ("31337", "85", "Bowie State Bulldogs", "");  -- Central Intercollegiate Athletics Association
+INSERT INTO teams VALUES ("31337", "667", "Winston-Salem", "");  -- Central Intercollegiate Athletics Association
 INSERT INTO teams VALUES ("31337", "1615", "Judson Eagles", "");  --  Chicagoland Collegiate At
 INSERT INTO teams VALUES ("31337", "1821", "Purdue-Calumet Peregrines", "");  --  Chicagoland Collegiate At
 INSERT INTO teams VALUES ("31337", "1823", "Roosevelt Lakers", "");  --  Chicagoland Collegiate At
@@ -1004,7 +1004,7 @@ INSERT INTO teams VALUES ("31337", "1259", "Green Mountain Eagles", "");  -- Ind
 INSERT INTO teams VALUES ("31337", "1271", "Southeastern University Fire", "");  -- Independent (Non D-1)
 INSERT INTO teams VALUES ("31337", "12", "Allen Yellow Jackets", "");  -- Independent (Non D-1)
 INSERT INTO teams VALUES ("31337", "135", "Colorado College Tigers", "");  -- Independent (Non D-1)
-INSERT INTO teams VALUES ("31337", "308", "Lincoln (PA) Lions", "");  -- Independent (Non D-1)
+INSERT INTO teams VALUES ("31337", "308", "Lincoln (PA) Lions", "");  -- Central Intercollegiate Athletic Association
 INSERT INTO teams VALUES ("31337", "914", "North Greenville Crusaders", "");  -- Independent (Non D-1)
 INSERT INTO teams VALUES ("31337", "1573", "U.S. International Gulls", "");  --  Independents
 INSERT INTO teams VALUES ("31337", "386", "Morris Brown Wolverines", "");  -- Independents
